@@ -4,6 +4,7 @@ import android.animation.AnimatorInflater
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -445,7 +446,11 @@ private class UpSearchAdapter(
             card.root.isFocusable = true
             card.root.isFocusableInTouchMode = false
             card.root.isClickable = true
-            card.root.defaultFocusHighlightEnabled = false
+            // View#setDefaultFocusHighlightEnabled is API 26+; below that the
+            // platform draws no default focus highlight to disable.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                card.root.defaultFocusHighlightEnabled = false
+            }
             card.root.stateListAnimator = runCatching {
                 AnimatorInflater.loadStateListAnimator(card.root.context, R.animator.tv_focus_scale)
             }.getOrNull()
@@ -745,7 +750,11 @@ private fun RecyclerView.configureUpSearchRecycler() {
     descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
     isFocusable = true
     isFocusableInTouchMode = false
-    defaultFocusHighlightEnabled = false
+    // View#setDefaultFocusHighlightEnabled is API 26+; below that the
+    // platform draws no default focus highlight to disable.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        defaultFocusHighlightEnabled = false
+    }
     itemAnimator = null
     installChildFocusParkingOnDetach()
 }

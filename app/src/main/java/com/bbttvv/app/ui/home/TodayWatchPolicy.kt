@@ -92,7 +92,7 @@ internal fun buildTodayWatchPlan(
     creatorSignals.filter { it.mid > 0L }.forEach { signal ->
         persistedCreatorScores[signal.mid] = maxOf(persistedCreatorScores[signal.mid] ?: 0.0, signal.score)
         persistedCreatorCounts[signal.mid] = maxOf(persistedCreatorCounts[signal.mid] ?: 0, signal.watchCount)
-        creatorNames.putIfAbsent(signal.mid, signal.name.ifBlank { "UP主${signal.mid}" })
+        creatorNames.getOrPut(signal.mid) { signal.name.ifBlank { "UP主${signal.mid}" } }
     }
 
     val normalizedRecentCreators = normalizePositiveScores(recentCreatorScores)

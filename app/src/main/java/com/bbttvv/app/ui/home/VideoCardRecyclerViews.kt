@@ -1,5 +1,6 @@
 package com.bbttvv.app.ui.home
 
+import android.os.Build
 import android.os.SystemClock
 import android.os.Handler
 import android.os.Looper
@@ -984,7 +985,11 @@ private fun RecyclerView.configureVideoCardRecycler() {
     descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
     isFocusable = true
     isFocusableInTouchMode = false
-    defaultFocusHighlightEnabled = false
+    // View#setDefaultFocusHighlightEnabled is API 26+; below that the
+    // platform draws no default focus highlight to disable.
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        defaultFocusHighlightEnabled = false
+    }
     itemAnimator = null
     installChildFocusParkingOnDetach()
 }

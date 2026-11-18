@@ -297,7 +297,7 @@ internal fun mergeIncrementalDynamicItems(
 
     val merged = LinkedHashMap<String, DynamicItem>(incoming.size + existing.size)
     incoming.forEach { item -> merged[dynamicFeedItemKey(item)] = item }
-    existing.forEach { item -> merged.putIfAbsent(dynamicFeedItemKey(item), item) }
+    existing.forEach { item -> merged.getOrPut(dynamicFeedItemKey(item)) { item } }
     return merged.values.toList()
 }
 

@@ -10,7 +10,7 @@ android {
     targetProjectPath = ":app"
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 23
         targetSdk = 35
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["androidx.benchmark.enabledRules"] = "BaselineProfile"

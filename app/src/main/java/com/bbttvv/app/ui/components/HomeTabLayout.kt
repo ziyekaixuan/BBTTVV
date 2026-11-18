@@ -30,13 +30,13 @@ internal data class HomeTabLayout(
                     val id = if (legacy) legacyIds[token.trim()] else token.trim().toLongOrNull()
                     if (id == null) continue
                     val tab = byId[kotlin.math.abs(id)] ?: continue
-                    entries.putIfAbsent(tab, tab.alwaysVisible || id > 0)
+                    entries.getOrPut(tab) { tab.alwaysVisible || id > 0 }
                 }
             }
             for (tab in catalog) {
                 val showByDefault = tab != AppTopLevelTab.WATCH_LATER || watchLaterInTopTabsEnabled
                 val hiddenByLegacyLayout = legacy && tab.stableId in legacyIds.values
-                entries.putIfAbsent(tab, tab.alwaysVisible || (showByDefault && !hiddenByLegacyLayout))
+                entries.getOrPut(tab) { tab.alwaysVisible || (showByDefault && !hiddenByLegacyLayout) }
             }
             return HomeTabLayout(entries.keys.toList(), entries.filterValues { it }.keys)
         }

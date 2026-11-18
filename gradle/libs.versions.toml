@@ -24,6 +24,7 @@ zxing = "3.5.4"
 danmakuRenderEngine = "v0.1.0"
 protobuf = "3.25.9"
 protobufPlugin = "0.9.4"
+desugar = "2.1.5"
 benchmark = "1.4.1"
 junit4 = "4.13.2"
 junitJupiter = "5.10.2"
@@ -66,6 +67,7 @@ androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiaut
 androidx-tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "tvMaterial" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
 danmaku-render-engine = { group = "com.github.bytedance", name = "DanmakuRenderEngine", version.ref = "danmakuRenderEngine" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }

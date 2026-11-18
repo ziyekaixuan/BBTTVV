@@ -10,6 +10,8 @@ object MediaUtils {
     /** Require the exact display transfer function and a decoder that accepts the HDR format. */
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     fun isLiveHdrSupported(context: Context, eotf: Int, codecs: String): Boolean {
+        // Display.HdrCapabilities requires API 24+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return false
         val displayType = when (eotf) {
             1 -> Display.HdrCapabilities.HDR_TYPE_HDR10
             2 -> Display.HdrCapabilities.HDR_TYPE_HLG
@@ -101,6 +103,8 @@ object MediaUtils {
 
     @Suppress("DEPRECATION")
     private fun Display.supportedHdrTypesCompat(): IntArray {
+        // Display.hdrCapabilities requires API 24+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return IntArray(0)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             mode.supportedHdrTypes
         } else {

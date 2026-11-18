@@ -60,7 +60,7 @@ android {
 
     defaultConfig {
         applicationId = "com.bbttvv.app"
-        minSdk = 26
+        minSdk = 23
         targetSdk = 35
         versionCode = 1
         versionName = "1.00"
@@ -138,6 +138,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
+        // Core library desugaring must be explicitly enabled: without this flag
+        // the coreLibraryDesugaring dependency is ignored and java.time /
+        // java.nio.file calls are not rewritten for API < 26.
+        isCoreLibraryDesugaringEnabled = true
     }
 
     buildFeatures {
@@ -220,6 +224,9 @@ protobuf {
 }
 
 dependencies {
+    // Core library desugaring: java.time / java.nio.file on API < 26
+    coreLibraryDesugaring(libs.desugar)
+
     // --- 1. Compose TV UI ---
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)

@@ -4,8 +4,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStreamWriter
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 import java.util.UUID
 
 internal object JsonPluginStorage {
@@ -17,13 +15,14 @@ internal object JsonPluginStorage {
         target: File,
         content: String,
         move: (File, File) -> Unit = { from, to ->
-            Files.move(
-                from.toPath(),
-                to.toPath(),
-                StandardCopyOption.ATOMIC_MOVE,
-                StandardCopyOption.REPLACE_EXISTING
-            )
-            Unit
+            // java.nio.file is API 26+ and is not covered by core library
+            // desugaring. File#renameTo maps to rename(2): atomic on the same
+            // filesystem, and it replaces the target — the same guarantees as
+            // Files.move(ATOMIC_MOVE, REPLACE_EXISTING) for a temp file that
+            // already lives in the target directory.
+            if (!from.renameTo(to)) {
+                throw IOException("无法移动插件文件：${from.name} -> ${to.name}")
+            }
         }
     ) {
         val parent = target.parentFile ?: throw IOException("插件目录无效")

@@ -1271,7 +1271,7 @@ class LivePlayerViewModel : BasePlayerViewModel() {
     private fun resolveLineOptions(candidates: List<LiveStreamCandidate>): List<LiveLineOption> {
         val grouped = LinkedHashMap<String, LiveStreamCandidate>()
         candidates.forEach { candidate ->
-            grouped.putIfAbsent(candidate.lineKey, candidate)
+            grouped.getOrPut(candidate.lineKey) { candidate }
         }
         val labelCount = mutableMapOf<String, Int>()
         return grouped.values.map { candidate ->
